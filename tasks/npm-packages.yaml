@@ -1,0 +1,27 @@
+- name: Install ts
+  ansible.builtin.npm:
+    name: typescript
+    global: true
+  environment:
+    PATH: "{{ node_path.stdout }}"
+  tags:
+    - install
+    - node
+- name: Install ncu
+  ansible.builtin.npm:
+    name: npm-check-updates
+    global: true
+  environment:
+    PATH: "{{ node_path.stdout }}"
+  tags:
+    - install
+    - node
+- name: Install tldr
+  ansible.builtin.npm:
+    name: tldr
+    global: true
+  environment:
+    PATH: "{{ node_path.stdout }}"
+  tags:
+    - install
+    - node

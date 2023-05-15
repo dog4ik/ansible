@@ -1,0 +1,27 @@
+- name: Install stow
+  ansible.builtin.apt:
+    name: stow
+  tags:
+    - dotfiles
+- name: Cloning .dotfiles
+  ansible.builtin.git:
+    repo: "https://github.com/dog4ik/.dotfiles.git"
+    dest: "{{ lookup('env', 'HOME') }}/.dotfiles"
+    recursive: true
+    update: true
+    accept_hostkey: true
+    version: master
+  tags:
+    - dotfiles
+- name: Remove .zshrc
+  ansible.builtin.command: rm ~/.zshrc
+  register: remove_zshrc
+  tags:
+    - dotfiles
+  changed_when: true
+- name: Stow dotfiles
+  ansible.builtin.shell: cd ~/.dotfiles && chmod +x ./install && chmod +x ./ubuntu && ./ubuntu
+  when: remove_zshrc is succeeded
+  tags:
+    - dotfiles
+  changed_when: false

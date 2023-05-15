@@ -1,0 +1,19 @@
+- name: Setup ppa
+  ansible.builtin.apt_repository:
+    repo: ppa:neovim-ppa/unstable
+    state: present
+  tags:
+    - neovim
+- name: Install nvim
+  ansible.builtin.apt:
+    name:
+      - neovim
+  tags:
+    - neovim
+- name: Get Packer
+  ansible.builtin.git:
+    repo: "https://github.com/wbthomason/packer.nvim"
+    dest: "{{ lookup('env', 'HOME') }}/.local/share/nvim/site/pack/packer/start/packer.nvim"
+    version: master
+  tags:
+    - neovim

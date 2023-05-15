@@ -1,0 +1,33 @@
+- name: Curl Rust installer
+  ansible.builtin.uri:
+    url: "https://sh.rustup.rs"
+    dest: ~/rust-install
+    mode: "u+x"
+  register: rust_curl
+  tags:
+    - rust
+- name: Install rust
+  ansible.builtin.shell:
+    cmd: ~/rust-install -y
+    executable: /bin/zsh
+  when: rust_curl is succeeded
+  changed_when: true
+  tags:
+    - rust
+- name: Install rust nightly
+  ansible.builtin.shell:
+    cmd: rustup install nightly
+    executable: /bin/zsh
+  when: rust_curl is succeeded
+  register: rust_nightly
+  changed_when: true
+  tags:
+    - rust
+- name: Set rust nightly as default
+  ansible.builtin.shell:
+    cmd: rustup default nightly
+    executable: /bin/zsh
+  when: rust_nightly is succeeded
+  changed_when: true
+  tags:
+    - rust

@@ -1,0 +1,55 @@
+- name: Main
+  hosts: localhost
+  pre_tasks:
+    - name: Update cache
+      ansible.builtin.apt:
+        update_cache: true
+      tags:
+        - zsh
+        - node
+  tasks:
+    - name: Zsh
+      ansible.builtin.include_tasks:
+        file: ./tasks/zsh.yaml
+      tags:
+        - zsh
+    - name: Node
+      ansible.builtin.include_tasks:
+        file: ./tasks/node.yaml
+      tags:
+        - node
+    - name: Rust
+      ansible.builtin.include_tasks:
+        file: ./tasks/rust.yaml
+      tags:
+        - rust
+    - name: Go
+      ansible.builtin.include_tasks:
+        file: ./tasks/go.yaml
+      tags:
+        - go
+    - name: Npm packages
+      ansible.builtin.include_tasks:
+        file: ./tasks/npm-packages.yaml
+      tags:
+        - npm
+    - name: Apt packages
+      ansible.builtin.include_tasks:
+        file: ./tasks/apt-packages.yaml
+      tags:
+        - packages
+    - name: Neovim
+      ansible.builtin.include_tasks:
+        file: ./tasks/neovim.yaml
+      tags:
+        - neovim
+    - name: Git
+      ansible.builtin.include_tasks:
+        file: ./tasks/git.yaml
+      tags:
+        - git
+    - name: Dotfiles
+      ansible.builtin.include_tasks:
+        file: ./tasks/dotfiles.yaml
+      tags:
+        - dotfiles

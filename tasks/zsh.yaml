@@ -1,0 +1,46 @@
+- name: Install zsh
+  ansible.builtin.apt:
+    name: zsh
+  tags:
+    - zsh
+- name: Find path to zsh
+  ansible.builtin.command: which zsh
+  register: zsh_path
+  changed_when: false
+  tags:
+    - zsh
+- name: Find current user
+  ansible.builtin.command: whoami
+  register: curr_user
+  changed_when: false
+  tags:
+    - zsh
+- name: Set shell
+  ansible.builtin.user:
+    name: "{{ curr_user.stdout }}"
+    shell: "{{ zsh_path.stdout }}"
+  tags:
+    - zsh
+- name: Curl oh-my-zsh
+  ansible.builtin.uri:
+    url: "https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh"
+    dest: ~/.oh-my-installer
+    mode: "u+x"
+  register: omz_install
+  tags:
+    - zsh
+- name: Run oh-my-zsh installer
+  ansible.builtin.command:
+    cmd: ~/.oh-my-installer
+  when: omz_install is succeeded
+  changed_when: false
+  tags:
+    - zsh
+- name: Install zsh-autosuggestions
+  ansible.builtin.git:
+    repo: "https://github.com/zsh-users/zsh-autosuggestions.git"
+    dest: "~/.oh-my-zsh/plugins/zsh-autosuggestions"
+    update: true
+    version: "master"
+  tags:
+    - zsh

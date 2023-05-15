@@ -1,0 +1,27 @@
+- name: Curl nvm
+  ansible.builtin.uri:
+    url: "https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh"
+    dest: ~/.nvm-install
+    mode: "u+x"
+  register: nvm_curl
+  tags:
+    - node
+- name: Run nvm-installer
+  ansible.builtin.command:
+    cmd: ~/.nvm-install
+  when: nvm_curl is succeeded
+  register: nvm_install
+  changed_when: true
+  tags:
+    - node
+- name: Install latest node
+  ansible.builtin.shell:
+    cmd:
+      set -o pipefail > /dev/null && source ~/.nvm/nvm.sh > /dev/null && nvm install $(nvm ls-remote | tail -n 1) > /dev/null && nvm which default
+      | sed 's/\/node//2'
+    executable: /bin/bash
+  register: node_path
+  when: nvm_curl is succeeded
+  changed_when: true
+  tags:
+    - node

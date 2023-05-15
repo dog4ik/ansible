@@ -1,0 +1,9 @@
+Host *
+  AddKeysToAgent yes
+
+Host timeweb
+  AddKeysToAgent yes
+  IdentityFile ~/.ssh/timeweb
+  HostName 94.228.122.168
+  User root
+  Port 22

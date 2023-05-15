@@ -1,0 +1,35 @@
+- name: Git personal setup email
+  ansible.builtin.git_config:
+    name: user.email
+    scope: global
+    value: "angryvadik@gmail.com"
+  tags:
+    - git
+- name: Git personal setup name
+  ansible.builtin.git_config:
+    name: user.name
+    scope: global
+    value: "Vadim"
+  tags:
+    - git
+- name: Git autocrlf
+  ansible.builtin.git_config:
+    name: core.autocrlf
+    scope: global
+    value: input
+  tags:
+    - git
+- name: Git editor
+  ansible.builtin.git_config:
+    name: core.editor
+    scope: global
+    value: nvim
+  tags:
+    - git
+- name: Git rebase
+  ansible.builtin.git_config:
+    name: pull.rebase
+    scope: global
+    value: true
+  tags:
+    - git

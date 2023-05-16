@@ -25,3 +25,12 @@
   tags:
     - install
     - node
+- name: Install ts-node
+  ansible.builtin.npm:
+    name: ts-node
+    global: true
+  environment:
+    PATH: "{{ node_path.stdout }}"
+  tags:
+    - install
+    - node

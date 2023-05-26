@@ -48,6 +48,11 @@
         file: ./tasks/git.yaml
       tags:
         - git
+    - name: Tmux
+      ansible.builtin.include_tasks:
+        file: ./tasks/tmux.yaml
+      tags:
+        - tmux
     - name: Dotfiles
       ansible.builtin.include_tasks:
         file: ./tasks/dotfiles.yaml

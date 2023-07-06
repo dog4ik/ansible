@@ -1,4 +1,5 @@
 - name: Install zsh
+  become: true
   ansible.builtin.apt:
     name: zsh
   tags:
@@ -16,6 +17,7 @@
   tags:
     - zsh
 - name: Set shell
+  become: true
   ansible.builtin.user:
     name: "{{ curr_user.stdout }}"
     shell: "{{ zsh_path.stdout }}"

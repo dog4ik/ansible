@@ -1,12 +1,5 @@
 - name: Main
   hosts: localhost
-  pre_tasks:
-    - name: Update cache
-      ansible.builtin.apt:
-        update_cache: true
-      tags:
-        - zsh
-        - node
   tasks:
     - name: Zsh
       ansible.builtin.include_tasks:

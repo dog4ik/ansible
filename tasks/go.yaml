@@ -1,21 +1,15 @@
-- name: Remove go
-  ansible.builtin.shell:
-    cmd: rm -rf /usr/local/go
-    executable: /bin/zsh
-  changed_when: true
-  tags:
-    - go
 - name: Curl Go archive
   ansible.builtin.uri:
     url: "https://go.dev/dl/go1.20.4.linux-amd64.tar.gz"
-    dest: ~/go-install.tar.gz
+    dest: "{{ lookup('env', 'HOME') }}/go-install.tar.gz"
   register: go_zip
   tags:
     - go
 - name: Unarchive go
+  become: true
   ansible.builtin.unarchive:
     dest: /usr/local
-    src: ~/go-install.tar.gz
+    src: "{{ lookup('env', 'HOME') }}/go-install.tar.gz"
   when: go_zip is succeeded
   changed_when: true
   tags:

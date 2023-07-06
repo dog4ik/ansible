@@ -28,6 +28,7 @@
       - "python3-pip"
       - "pavucontrol"
       - "picom"
+      - "light"
       - "feh"
   tags:
     - packages

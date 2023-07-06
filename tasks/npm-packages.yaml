@@ -1,4 +1,6 @@
 - name: Install ts
+  async: 120
+  poll: 0
   ansible.builtin.npm:
     name: typescript
     global: true
@@ -8,6 +10,8 @@
     - install
     - node
 - name: Install ncu
+  async: 120
+  poll: 0
   ansible.builtin.npm:
     name: npm-check-updates
     global: true
@@ -17,6 +21,8 @@
     - install
     - node
 - name: Install tldr
+  async: 120
+  poll: 0
   ansible.builtin.npm:
     name: tldr
     global: true
@@ -26,6 +32,8 @@
     - install
     - node
 - name: Install ts-node
+  async: 120
+  poll: 0
   ansible.builtin.npm:
     name: ts-node
     global: true

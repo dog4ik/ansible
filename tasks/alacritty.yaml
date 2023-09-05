@@ -21,14 +21,15 @@
     - alacritty
 - name: Build alacritty from source
   ansible.builtin.command:
-    cmd: cargo build ~/alacritty --release
+    cmd: zsh -c "cargo build --release"
+    chdir: ~/alacritty
   changed_when: true
   tags:
     - alacritty
 - name: Install alacritty terminfo
   become: true
   ansible.builtin.command:
-    cmd: tic -xe alacritty,alacritty-direct ~/alacritty/extra/alacritty.info
+    cmd: tic -xe alacritty,alacritty-direct /home/dog4ik/alacritty/extra/alacritty.info
   changed_when: true
   tags:
     - alacritty

@@ -31,6 +31,12 @@
         file: ./tasks/apt-packages.yaml
       tags:
         - packages
+    - name: Alacritty
+      ansible.builtin.include_tasks:
+        file: ./tasks/alacritty.yaml
+      when: rust_nightly is succeeded
+      tags:
+        - alacritty
     - name: Neovim
       ansible.builtin.include_tasks:
         file: ./tasks/neovim.yaml

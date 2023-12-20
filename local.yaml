@@ -1,5 +1,7 @@
 - name: Main
   hosts: localhost
+  any_errors_fatal: false
+  ignore_errors: true
   tasks:
     - name: Zsh
       ansible.builtin.include_tasks:

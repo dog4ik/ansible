@@ -2,6 +2,14 @@
   become: true
   ansible.builtin.apt:
     name: zsh
+  register: apt_zsh
+  tags:
+    - zsh
+- name: Install zsh(pacman)
+  become: true
+  ansible.builtin.pacman:
+    name: zsh
+  when: apt_zsh is failed
   tags:
     - zsh
 - name: Find path to zsh

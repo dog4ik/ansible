@@ -28,9 +28,9 @@
         file: ./tasks/npm-packages.yaml
       tags:
         - npm
-    - name: Apt packages
+    - name: Packages
       ansible.builtin.include_tasks:
-        file: ./tasks/apt-packages.yaml
+        file: ./tasks/packages.yaml
       tags:
         - packages
     - name: Alacritty

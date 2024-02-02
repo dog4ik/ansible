@@ -1,0 +1,33 @@
+- name: Define packages
+  ansible.builtin.set_fact:
+    packages:
+      - "tmux"
+      - "fzf"
+      - "xclip"
+      - "ripgrep"
+      - "unzip"
+      - "libtool"
+      - "ffmpeg"
+      - "sway"
+      - "pavucontrol"
+      - "feh"
+  tags:
+    - packages
+    - productivity
+- name: Install packages
+  become: true
+  ansible.builtin.apt:
+    name: "{{ packages }}"
+  register: apt_packages
+  tags:
+    - packages
+    - productivity
+- name: Install system packages (pacman)
+  become: true
+  when: apt_packages.failed
+  ansible.builtin.pacman:
+    name: "{{ packages }}"
+  register: apt_result
+  tags:
+    - packages
+    - productivity

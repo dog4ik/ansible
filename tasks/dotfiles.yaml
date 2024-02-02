@@ -2,8 +2,17 @@
   become: true
   ansible.builtin.apt:
     name: stow
+  register: apt_stow
   tags:
     - dotfiles
+- name: Install stow
+  become: true
+  ansible.builtin.pacman:
+    name: stow
+  when: apt_stow.failed
+  tags:
+    - dotfiles
+
 - name: Cloning .dotfiles
   ansible.builtin.git:
     repo: "https://github.com/dog4ik/.dotfiles.git"

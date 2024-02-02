@@ -3,6 +3,7 @@
   ansible.builtin.apt_repository:
     repo: ppa:neovim-ppa/unstable
     state: present
+  register: nvim_ppa
   tags:
     - neovim
 - name: Install nvim
@@ -10,5 +11,15 @@
   ansible.builtin.apt:
     name:
       - neovim
+  register: nvim_apt_install
+  when: not nvim_ppa.failed
+  tags:
+    - neovim
+- name: Install nvim (pacman)
+  become: true
+  ansible.builtin.pacman:
+    name:
+      - neovim
+  when: nvim_ppa.failed or nvim_apt_install.failed
   tags:
     - neovim

@@ -1,16 +1,33 @@
+- name: Curl go latest version
+  ansible.builtin.uri:
+    url: "https://go.dev/VERSION?m=text"
+    return_content: true
+  register: go_curl
+  tags:
+    - go
+
+- name: Get version of go
+  ansible.builtin.command:
+    cmd: "echo {{ go_curl.content | split('\n') | first }}"
+
+  register: go_version
+  changed_when: true
+  tags:
+    - go
+
 - name: Curl Go archive
   ansible.builtin.uri:
-    url: "https://go.dev/dl/go1.21.0.linux-amd64.tar.gz"
+    url: "https://go.dev/dl/{{ go_version.stdout }}.linux-amd64.tar.gz"
     dest: "{{ lookup('env', 'HOME') }}/go-install.tar.gz"
   register: go_zip
   tags:
     - go
+
 - name: Unarchive go
   become: true
   ansible.builtin.unarchive:
     dest: /usr/local
     src: "{{ lookup('env', 'HOME') }}/go-install.tar.gz"
-  when: go_zip is succeeded
   changed_when: true
   tags:
     - go

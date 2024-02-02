@@ -8,16 +8,16 @@
         file: ./tasks/zsh.yaml
       tags:
         - zsh
-    - name: Node
-      ansible.builtin.include_tasks:
-        file: ./tasks/node.yaml
-      tags:
-        - node
     - name: Rust
       ansible.builtin.include_tasks:
         file: ./tasks/rust.yaml
       tags:
         - rust
+    - name: Node
+      ansible.builtin.include_tasks:
+        file: ./tasks/node.yaml
+      tags:
+        - node
     - name: Go
       ansible.builtin.include_tasks:
         file: ./tasks/go.yaml
